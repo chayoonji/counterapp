@@ -9,11 +9,13 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { useState } from 'react';
 
+const contractAddress = '0xdaB2Eb80Ed7c209F32300e63DD7C430D6E9200a1';
+
 const Home: NextPage = () => {
-  const myAddress = useAddress();
-  const contractAddress = '0x79c3F32d1B23CC1645F8bE357DEea1b519340513';
+  const myWalletAddress = useAddress();
+
   const { contract } = useContract(contractAddress);
-  const [counter, setCounter] = useState<string | undefined>();
+  const [counter, setCounter] = useState<string | undefined>('');
 
   async function getCounter() {
     if (!contract) return;
@@ -26,12 +28,11 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.title}>
-          <h3> My Counter DApp</h3>
+          <h3>My Counter dApp</h3>
         </div>
-
         <div className={styles.description}>
-          Contract address: {contractAddress} <br />
-          Your address: {myAddress}
+          Contract Address: {contractAddress} <br />
+          My Wallet Address: {myWalletAddress}
         </div>
 
         <h3 className={styles.title}>{counter}</h3>
@@ -42,23 +43,28 @@ const Home: NextPage = () => {
               contractAddress={contractAddress}
               action={(contract) => contract.call('decrementCounter')}
             >
-              <h1> - </h1>
+              {' '}
+              -{' '}
             </Web3Button>
           </div>
+
           <div className={styles.card}>
             <Web3Button
               contractAddress={contractAddress}
               action={() => getCounter()}
             >
-              <h1>Refresh</h1>
+              {' '}
+              Refresh{' '}
             </Web3Button>
           </div>
+
           <div className={styles.card}>
             <Web3Button
               contractAddress={contractAddress}
               action={(contract) => contract.call('incrementCounter')}
             >
-              <h1> + </h1>
+              {' '}
+              +{' '}
             </Web3Button>
           </div>
         </div>
